@@ -5,42 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Pras</title>
     <style>
+        @property --background-darkness {
+            syntax: '<number>';
+            inherits: true;
+            initial-value: 0.65;
+        }
+
         body { 
-            --bg-image: url('bgtanjiro.jpg');
             --header-color: #00e5ff;
             --glass-gray: rgba(105, 110, 118, 0.42);
+            --background-darkness: 0.65;
             position: relative;
-            background: linear-gradient(rgba(10,10,20,0.6), rgba(10,10,20,0.7)),
+            background: linear-gradient(rgba(10,10,20,var(--background-darkness)), rgba(10,10,20,var(--background-darkness))),
                         var(--bg-image) center/cover no-repeat fixed;
             color: white; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; margin: 0; 
             display: flex; flex-direction: column; align-items: center; 
             padding: 40px 20px;
-            transition: background 0.6s ease;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            opacity: 0;
-            background: linear-gradient(rgba(10,10,20,0.55), rgba(10,10,20,0.78)),
-                        url('linebg.png') center/cover no-repeat;
-            transition: opacity 1s ease;
+            transition: --background-darkness 1s ease, color 0.4s ease;
         }
 
         body.dark-mode {
             --glass-gray: rgba(30, 34, 40, 0.72);
-            background-color: #000;
+            --background-darkness: 0.86;
             color: #f5f5f5;
-        }
-
-        body.dark-mode::before {
-            background: linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.9)),
-                        var(--bg-image) center/cover no-repeat;
-            opacity: 1;
         }
 
         /* --- Foto Profil --- */
