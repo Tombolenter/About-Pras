@@ -26,18 +26,20 @@
             transition: --background-darkness 1s ease, color 0.4s ease;
         }
 
+        body:not(.site-started) {
+            overflow: hidden;
+        }
+
         body.dark-mode {
             --glass-gray: rgba(30, 34, 40, 0.72);
             --background-darkness: 0.86;
             color: #f5f5f5;
         }
 
-        /* --- Foto Profil --- */
         .profile-container { position: relative; margin-bottom: 20px; }
         .profile-pic { 
             width: 110px; height: 110px; border-radius: 50%; 
             object-fit: cover; border: 3px solid transparent;
-            /* Efek glowing biru neon */
             box-shadow: 0 0 15px #00e5ff, 0 0 30px #00e5ff;
         }
         .username {
@@ -48,13 +50,56 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             text-shadow: 0 0 10px var(--header-color), 0 0 24px var(--header-color);
+            opacity: 0;
+            transform: translateY(18px) scale(0.92);
         }
-        .bio { font-size: 0.9em; color: #bbb; margin-bottom: 30px; }
 
-        /* --- BAGIAN MUSIK KOTAK / PLAYER BARU --- */
+        body.site-started .username {
+            animation: usernameReveal 0.9s cubic-bezier(0.2, 0.85, 0.25, 1.05) 2.4s forwards,
+                       usernameFlicker 3.9s linear 3.45s infinite;
+        }
+
+        .bio {
+            font-size: 0.9em;
+            color: #bbb;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(14px);
+        }
+
+        body.site-started .bio {
+            animation: contentRise 0.8s cubic-bezier(0.2, 0.85, 0.25, 1.05) 2.7s forwards;
+        }
+
+        @keyframes usernameReveal {
+            from { opacity: 0; transform: translateY(18px) scale(0.92); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes usernameFlicker {
+            0%, 6%, 7%, 8%, 31%, 32%, 33%, 67%, 68%, 100% {
+                opacity: 1;
+                text-shadow: 0 0 10px var(--header-color), 0 0 24px var(--header-color);
+            }
+            6.5%, 7.5%, 31.5%, 32.5%, 67.5% {
+                opacity: 0.25;
+                text-shadow: 0 0 1px var(--header-color);
+            }
+            21%, 21.5% {
+                opacity: 0.55;
+                text-shadow: 0 0 4px var(--header-color), 0 0 9px var(--header-color);
+            }
+        }
+
         .music-player {
             width: min(90vw, 360px);
             margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(28px) scale(0.97);
+        }
+
+        body.site-started .music-player {
+            animation: contentRise 0.95s cubic-bezier(0.2, 0.85, 0.25, 1.05) 0.05s forwards;
         }
 
         .music-card {
@@ -227,6 +272,12 @@
             font: inherit;
             cursor: pointer;
             transition: 0.2s ease;
+            opacity: 0;
+            transform: translateY(18px) scale(0.94);
+        }
+
+        body.site-started .next-tab-btn {
+            animation: contentRise 0.8s cubic-bezier(0.2, 0.85, 0.25, 1.05) 2.2s forwards;
         }
 
         .next-tab-btn:hover {
@@ -249,6 +300,16 @@
             box-shadow: 0 18px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(60px) scale(0.96);
+            visibility: hidden;
+            transition: opacity 0.95s cubic-bezier(0.2, 0.75, 0.25, 1), transform 1s cubic-bezier(0.16, 0.85, 0.25, 1.05), visibility 0.95s ease;
+        }
+
+        body.site-started .playlist.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
         }
 
         .now-playing-label {
@@ -330,7 +391,6 @@
         }
 
 
-        /* --- TOMBOL-TOMBOL SOSIAL --- */
         .btn { 
             position: relative;
             display: inline-flex; align-items: center; justify-content: flex-start;
@@ -397,6 +457,36 @@
             gap: 4px;
         }
 
+        .socials .btn {
+            opacity: 0;
+            transform: translateY(28px) scale(0.72);
+            animation: none;
+        }
+
+        body.site-started .socials .btn {
+            animation-name: profileButtonRise;
+            animation-duration: 0.85s;
+            animation-timing-function: cubic-bezier(0.2, 0.85, 0.25, 1.15);
+            animation-fill-mode: forwards;
+        }
+
+        body.site-started .socials .btn:nth-child(1) { animation-delay: 0.95s; }
+        body.site-started .socials .btn:nth-child(2) { animation-delay: 1.05s; }
+        body.site-started .socials .btn:nth-child(3) { animation-delay: 1.15s; }
+        body.site-started .socials .btn:nth-child(4) { animation-delay: 1.25s; }
+        body.site-started .socials .btn:nth-child(5) { animation-delay: 1.35s; }
+
+        @keyframes contentRise {
+            from { opacity: 0; transform: translateY(28px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes profileButtonRise {
+            0% { opacity: 0; transform: translateY(28px) scale(0.72); }
+            70% { opacity: 1; transform: translateY(-5px) scale(1.06); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         .about-section {
             width: min(90vw, 680px);
             margin-top: 110px;
@@ -405,7 +495,7 @@
             opacity: 0;
             transform: translateY(70px);
             visibility: hidden;
-            transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
+            transition: opacity 1.05s cubic-bezier(0.2, 0.75, 0.25, 1), transform 1.05s cubic-bezier(0.2, 0.75, 0.25, 1), visibility 1.05s ease;
         }
 
         .about-section.is-visible {
@@ -421,12 +511,14 @@
             border-radius: 50%;
             border: 3px solid white;
             box-shadow: 0 0 18px rgba(255,255,255,0.85), 0 0 34px rgba(0,229,255,0.65);
-            transform: scale(0.7) rotate(-8deg);
-            transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0;
+            transform: scale(0.72) translateY(24px) rotate(-8deg);
+            transition: opacity 0.8s ease 0.2s, transform 1.1s cubic-bezier(0.16, 0.85, 0.25, 1.1);
         }
 
         .about-section.is-visible .about-photo {
-            transform: scale(1) rotate(0);
+            opacity: 1;
+            transform: scale(1) translateY(0) rotate(0);
         }
 
         .profile-trigger {
@@ -593,12 +685,14 @@
             box-shadow: 0 18px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            transform: translateY(30px);
-            transition: transform 0.8s 0.2s ease;
+            opacity: 0;
+            transform: translateY(34px) scale(0.97);
+            transition: opacity 0.8s ease 0.38s, transform 1s cubic-bezier(0.16, 0.85, 0.25, 1.05) 0.38s;
         }
 
         .about-section.is-visible .about-box {
-            transform: translateY(0);
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
         .about-title {
@@ -613,7 +707,6 @@
             line-height: 1.8;
         }
 
-        /* Layar Pembuka (Overlay) */
         #masuk-layar { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.88); display: flex; align-items: center; 
@@ -752,6 +845,7 @@
         const nowPlayingLabel = document.getElementById('now-playing-label');
         const nowPlayingTitle = document.getElementById('now-playing-title');
         const playlistList = document.getElementById('playlist-list');
+        const playlist = document.querySelector('.playlist');
         const aboutSection = document.getElementById('about-section');
         const profileTrigger = document.getElementById('profile-trigger');
         const hackerOverlay = document.getElementById('hacker-overlay');
@@ -897,10 +991,22 @@
 
         function mulaiWebsite() {
             document.getElementById('masuk-layar').style.display = 'none';
+            document.body.classList.add('site-started');
             if (lagu.paused) {
                 lagu.play();
             }
         }
+
+        document.addEventListener('keydown', (event) => {
+            const masukLayar = document.getElementById('masuk-layar');
+            const allowedKey = event.key === ' ' || event.key === 'Enter' || /^[a-zA-Z0-9]$/.test(event.key);
+            const overlayVisible = getComputedStyle(masukLayar).display !== 'none';
+
+            if (overlayVisible && allowedKey && !event.repeat) {
+                event.preventDefault();
+                mulaiWebsite();
+            }
+        });
 
         const hackerCharacters = '01<>[]{}#$%&@/\\';
         hackerRain.innerHTML = Array.from({ length: 120 }, (_, index) => {
@@ -1008,7 +1114,12 @@
             aboutSection.classList.toggle('is-visible', entry.isIntersecting);
         }, { threshold: 0.2 });
 
+        const playlistObserver = new IntersectionObserver(([entry]) => {
+            playlist.classList.toggle('is-visible', entry.isIntersecting);
+        }, { threshold: 0.2 });
+
         aboutObserver.observe(aboutSection);
+        playlistObserver.observe(playlist);
 
         updateLoopButton();
         applyTrackInfo();
