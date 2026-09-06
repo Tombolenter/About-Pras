@@ -51,7 +51,6 @@
             text-transform: uppercase;
             text-shadow: 0 0 10px var(--header-color), 0 0 24px var(--header-color);
             opacity: 0;
-            transform: translateY(18px) scale(0.92);
         }
 
         body.site-started .username {
@@ -72,8 +71,8 @@
         }
 
         @keyframes usernameReveal {
-            from { opacity: 0; transform: translateY(18px) scale(0.92); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes usernameFlicker {
@@ -263,7 +262,11 @@
         }
 
         .next-tab-btn {
-            margin-top: 20px;
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 800;
+            margin: 0;
             padding: 10px 18px;
             border: 1px solid rgba(255,255,255,0.18);
             border-radius: 999px;
@@ -274,6 +277,7 @@
             transition: 0.2s ease;
             opacity: 0;
             transform: translateY(18px) scale(0.94);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.3);
         }
 
         body.site-started .next-tab-btn {
@@ -282,7 +286,7 @@
 
         .next-tab-btn:hover {
             background: rgba(255,255,255,0.16);
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.04);
             outline: 2px solid white;
             outline-offset: 3px;
             box-shadow: 0 0 18px rgba(255,255,255,0.8);
@@ -290,7 +294,7 @@
 
         .playlist {
             width: min(90vw, 520px);
-            margin-top: 24px;
+            margin-top: 58px;
             padding: 22px;
             box-sizing: border-box;
             text-align: left;
@@ -496,7 +500,7 @@
 
         .about-section {
             width: min(90vw, 680px);
-            margin-top: 110px;
+            margin-top: 155px;
             padding: 34px 24px 42px;
             box-sizing: border-box;
             opacity: 0;
@@ -719,6 +723,50 @@
                 padding: 28px 12px;
             }
 
+            .btn {
+                width: 44px;
+                height: 44px;
+                margin: 9px 7px;
+            }
+
+            .btn img {
+                width: 44px;
+                height: 44px;
+            }
+
+            .btn:hover,
+            .btn:focus-visible {
+                width: 112px;
+                transform: translateY(-2px) scale(1.06);
+            }
+
+            .username {
+                transform: none;
+            }
+
+            body.site-started .username {
+                animation: usernameRevealMobile 0.7s cubic-bezier(0.22, 0.7, 0.25, 1) 2.15s forwards,
+                           usernameFlicker 4.6s linear 2.95s infinite;
+            }
+
+            .bio {
+                transform: translateY(8px);
+            }
+
+            body.site-started .bio {
+                animation: contentRiseMobile 0.6s cubic-bezier(0.22, 0.7, 0.25, 1) 2.38s forwards;
+            }
+
+            @keyframes usernameRevealMobile {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            @keyframes contentRiseMobile {
+                from { opacity: 0; transform: translateY(8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
             .music-player {
                 width: min(78vw, 250px);
                 margin-bottom: 18px;
@@ -779,6 +827,13 @@
                 transform: translateY(2px) scale(0.86);
                 filter: brightness(0.62);
                 box-shadow: 0 0 8px rgba(255,255,255,0.45);
+            }
+
+            .next-tab-btn {
+                right: 14px;
+                bottom: 14px;
+                padding: 8px 13px;
+                font-size: 0.78rem;
             }
         }
 
