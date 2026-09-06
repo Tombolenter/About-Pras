@@ -143,13 +143,15 @@
         }
 
         .control-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: 52px;
             height: 52px;
             border: none;
             border-radius: 50%;
             background: linear-gradient(135deg, #35d46f, #159447);
             color: #07150c;
-            font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 0 18px rgba(53, 212, 111, 0.55);
@@ -164,6 +166,9 @@
         }
 
         .switch-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             width: 42px;
             height: 42px;
             border: 1px solid rgba(255,255,255,0.12);
@@ -173,6 +178,18 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: 0.2s ease;
+        }
+
+        .player-icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .control-btn .player-icon {
+            width: 30px;
+            height: 30px;
         }
 
         .switch-btn:hover {
@@ -623,7 +640,7 @@
 <body>
 
     <div id="masuk-layar" onclick="mulaiWebsite()">
-        <h2> hayyy </h2>
+        <h2> Hayyy </h2>
         <p>Tap untuk lanjudd</p>
     </div>
 
@@ -651,9 +668,9 @@
                 </div>
 
                 <div class="controls">
-                    <button class="switch-btn mode-btn" id="shuffle-btn" type="button" aria-label="Shuffle mati" aria-pressed="false">🔀︎</button>
+                    <button class="switch-btn mode-btn" id="shuffle-btn" type="button" aria-label="Shuffle mati" aria-pressed="false"><img class="player-icon" src="shufflebutton.png" alt=""></button>
                     <button class="switch-btn" id="prev-btn" aria-label="Previous song">⏮</button>
-                    <button class="control-btn" id="play-btn" aria-label="Play or pause music">▶︎</button>
+                    <button class="control-btn" id="play-btn" aria-label="Play or pause music"><img class="player-icon" id="play-icon" src="playbutton.png" alt="Play"></button>
                     <button class="switch-btn" id="next-btn" aria-label="Next song">⏭</button>
                     <button class="switch-btn mode-btn" id="loop-btn" type="button" aria-label="Loop mati" aria-pressed="false">↻</button>
                 </div>
@@ -714,12 +731,22 @@
     </div>
 
     <script>
+        history.scrollRestoration = 'manual';
+
+        function resetScrollPosition() {
+            window.scrollTo(0, 0);
+        }
+
+        window.addEventListener('load', resetScrollPosition);
+        window.addEventListener('pageshow', resetScrollPosition);
+
         const lagu = document.getElementById('bg-lagu');
         const playBtn = document.getElementById('play-btn');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
         const shuffleBtn = document.getElementById('shuffle-btn');
         const loopBtn = document.getElementById('loop-btn');
+        const playIcon = document.getElementById('play-icon');
         const loopStatus = document.getElementById('loop-status');
         const nextTabBtn = document.getElementById('next-tab-btn');
         const nowPlayingLabel = document.getElementById('now-playing-label');
@@ -951,11 +978,13 @@
         lagu.addEventListener('loadedmetadata', updateProgress);
         lagu.addEventListener('timeupdate', updateProgress);
         lagu.addEventListener('play', () => {
-            playBtn.textContent = '⏸︎';
+            playIcon.src = 'pausebutton.png';
+            playIcon.alt = 'Pause';
             nowPlayingLabel.textContent = 'NOW PLAYING';
         });
         lagu.addEventListener('pause', () => {
-            playBtn.textContent = '▶︎';
+            playIcon.src = 'playbutton.png';
+            playIcon.alt = 'Play';
             nowPlayingLabel.textContent = 'PAUSED';
         });
         lagu.addEventListener('ended', () => {
@@ -971,7 +1000,8 @@
             }
 
             nowPlayingLabel.textContent = 'FINISHED';
-            playBtn.textContent = '▶︎';
+            playIcon.src = 'playbutton.png';
+            playIcon.alt = 'Play';
         });
 
         const aboutObserver = new IntersectionObserver(([entry]) => {
