@@ -5,35 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Pras</title>
     <style>
-        @property --background-darkness {
-            syntax: '<number>';
-            inherits: true;
-            initial-value: 0.65;
-        }
-
         body { 
             --header-color: #00e5ff;
             --glass-gray: rgba(105, 110, 118, 0.42);
-            --background-darkness: 0.65;
             position: relative;
-            background: linear-gradient(rgba(10,10,20,var(--background-darkness)), rgba(10,10,20,var(--background-darkness))),
+            background: linear-gradient(rgba(10,10,20,0.65), rgba(10,10,20,0.65)),
                         var(--bg-image) center/cover no-repeat fixed;
             color: white; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; margin: 0; 
             display: flex; flex-direction: column; align-items: center; 
             padding: 40px 20px;
-            transition: --background-darkness 1s ease, color 0.4s ease;
         }
 
         body:not(.site-started) {
             overflow: hidden;
-        }
-
-        body.dark-mode {
-            --glass-gray: rgba(30, 34, 40, 0.72);
-            --background-darkness: 0.86;
-            color: #f5f5f5;
         }
 
         .profile-container { position: relative; margin-bottom: 20px; }
@@ -261,37 +247,6 @@
             text-transform: uppercase;
         }
 
-        .next-tab-btn {
-            position: fixed;
-            right: 22px;
-            bottom: 22px;
-            z-index: 800;
-            margin: 0;
-            padding: 10px 18px;
-            border: 1px solid rgba(255,255,255,0.18);
-            border-radius: 999px;
-            background: rgba(255,255,255,0.08);
-            color: white;
-            font: inherit;
-            cursor: pointer;
-            transition: 0.2s ease;
-            opacity: 0;
-            transform: translateY(18px) scale(0.94);
-            box-shadow: 0 8px 22px rgba(0,0,0,0.3);
-        }
-
-        body.site-started .next-tab-btn {
-            animation: contentRise 0.8s cubic-bezier(0.2, 0.85, 0.25, 1.05) 2.2s forwards;
-        }
-
-        .next-tab-btn:hover {
-            background: rgba(255,255,255,0.16);
-            transform: translateY(-2px) scale(1.04);
-            outline: 2px solid white;
-            outline-offset: 3px;
-            box-shadow: 0 0 18px rgba(255,255,255,0.8);
-        }
-
         .playlist {
             width: min(90vw, 520px);
             margin-top: 58px;
@@ -313,6 +268,19 @@
         }
 
         body.site-started .playlist.is-visible {
+            visibility: visible;
+        }
+
+        .comments-section {
+            opacity: 0;
+            transform: translateY(60px) scale(0.96);
+            visibility: hidden;
+            will-change: opacity, transform;
+            opacity: var(--scroll-opacity, 0);
+            transform: translateY(var(--scroll-y, 60px)) scale(var(--scroll-scale, 0.96));
+        }
+
+        body.site-started .comments-section.is-visible {
             visibility: visible;
         }
 
@@ -897,6 +865,20 @@
             overflow-wrap: anywhere;
         }
 
+        .admin-tag {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: #ff4757;
+            box-shadow: 0 0 8px rgba(255,71,87,0.4);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+        }
+
         .comment-date {
             color: #bfc7d5;
             font-size: 0.72rem;
@@ -1024,18 +1006,10 @@
 
             .control-btn:active,
             .switch-btn:active,
-            .next-tab-btn:active,
             .playlist-item:active {
                 transform: translateY(2px) scale(0.86);
                 filter: brightness(0.62);
                 box-shadow: 0 0 8px rgba(255,255,255,0.45);
-            }
-
-            .next-tab-btn {
-                right: 14px;
-                bottom: 14px;
-                padding: 8px 13px;
-                font-size: 0.78rem;
             }
 
             .visit-counter {
@@ -1135,8 +1109,6 @@
         <strong id="visit-count">Memuat...</strong>
     </p>
 
-    <button class="next-tab-btn" id="next-tab-btn" type="button" aria-pressed="false">Mode Gelap</button>
-
     <section class="playlist" aria-labelledby="playlist-heading">
         <p class="now-playing-label" id="now-playing-label">NOW PLAYING</p>
         <p class="now-playing-title" id="now-playing-title">About You - The 1975</p>
@@ -1155,16 +1127,16 @@
     </section>
 
     <section class="comments-section" aria-labelledby="comments-heading">
-        <h2 class="comments-heading" id="comments-heading">Tinggalkan Komentar</h2>
-        <p class="comments-intro">Tulis pesan buat Pras dan lihat komentar teman-teman di bawah.</p>
+        <h2 class="comments-heading" id="comments-heading">Comments</h2>
+        <p class="comments-intro">Orang lain bisa melihat pesanmu</p>
         <form class="comment-form" id="comment-form">
-            <label for="comment-name">Nama
-                <input id="comment-name" name="name" type="text" maxlength="40" autocomplete="name" required placeholder="Nama kamu">
+            <label for="comment-name">Name
+                <input id="comment-name" name="name" type="text" maxlength="40" autocomplete="name" required placeholder="Your name">
             </label>
-            <label for="comment-message">Komentar
+            <label for="comment-message">Comment
                 <textarea id="comment-message" name="message" maxlength="280" rows="3" required placeholder="Tulis komentarmu (maksimal 280 karakter)"></textarea>
             </label>
-            <button class="comment-submit" id="comment-submit" type="submit">Kirim komentar</button>
+            <button class="comment-submit" id="comment-submit" type="submit">Post!!!</button>
             <p class="comment-status" id="comment-status" role="status" aria-live="polite"></p>
         </form>
         <div class="comment-list-heading">
@@ -1211,6 +1183,7 @@
         const commentList = document.getElementById('comment-list');
         const commentCount = document.getElementById('comment-count');
         const commentEmpty = document.getElementById('comment-empty');
+        const adminAlias = 'PrasReal123';
         const comments = [];
         let commentsStarted = false;
         let visitCountStarted = false;
@@ -1311,9 +1284,16 @@
                 content.className = 'comment-content';
                 const meta = document.createElement('div');
                 meta.className = 'comment-meta';
+                const isAdmin = comment.name === adminAlias;
                 const author = document.createElement('span');
                 author.className = 'comment-author';
-                author.textContent = comment.name;
+                author.textContent = isAdmin ? 'Pras' : comment.name;
+                if (isAdmin) {
+                    const adminTag = document.createElement('span');
+                    adminTag.className = 'admin-tag';
+                    adminTag.textContent = '👑 ADMIN';
+                    author.append(adminTag);
+                }
                 meta.append(author);
 
                 const dateText = formatCommentDate(comment.created_at);
@@ -1419,23 +1399,28 @@
                 return;
             }
 
-            const { data, error } = await supabaseClient
-                .from(commentsTable)
-                .insert(comment)
-                .select('name,message,created_at')
-                .single();
+            try {
+                const { data, error } = await supabaseClient
+                    .from(commentsTable)
+                    .insert(comment)
+                    .select('name,message,created_at')
+                    .single();
 
-            if (error) {
-                commentStatus.textContent = `Komentar gagal dikirim: ${error.message}`;
-                console.error('Gagal mengirim komentar Supabase:', error);
-            } else {
-                addCommentToTicker(data);
-                commentForm.reset();
-                commentStatus.textContent = 'Komentar berhasil dikirim. Makasih!';
+                if (error) {
+                    commentStatus.textContent = `Komentar gagal dikirim: ${error.message}`;
+                    console.error('Gagal mengirim komentar Supabase:', error);
+                } else {
+                    addCommentToTicker(data);
+                    commentForm.reset();
+                    commentStatus.textContent = 'Komentar berhasil dikirim. Makasih!';
+                }
+            } catch (error) {
+                commentStatus.textContent = 'Komentar gagal dikirim karena terjadi kesalahan.';
+                console.error('Pengiriman komentar gagal:', error);
+            } finally {
+                commentSubmit.disabled = false;
+                commentSubmit.textContent = 'Kirim komentar';
             }
-
-            commentSubmit.disabled = false;
-            commentSubmit.textContent = 'Kirim komentar';
         });
 
         function resetScrollPosition() {
@@ -1453,12 +1438,12 @@
         const loopBtn = document.getElementById('loop-btn');
         const playIcon = document.getElementById('play-icon');
         const loopStatus = document.getElementById('loop-status');
-        const nextTabBtn = document.getElementById('next-tab-btn');
         const nowPlayingLabel = document.getElementById('now-playing-label');
         const nowPlayingTitle = document.getElementById('now-playing-title');
         const playlistList = document.getElementById('playlist-list');
         const playlist = document.querySelector('.playlist');
         const aboutSection = document.getElementById('about-section');
+        const commentsSection = document.querySelector('.comments-section');
         const profileTrigger = document.getElementById('profile-trigger');
         const hackerOverlay = document.getElementById('hacker-overlay');
         const hackerCard = hackerOverlay.querySelector('.hacker-card');
@@ -1604,6 +1589,7 @@
         function mulaiWebsite() {
             document.getElementById('masuk-layar').style.display = 'none';
              document.body.classList.add('site-started');
+            updateScrollAnimations();
             startComments();
             startVisitCounter();
             if (lagu.paused) {
@@ -1690,11 +1676,6 @@
         });
         prevBtn.addEventListener('click', () => switchTrack(-1));
         nextBtn.addEventListener('click', () => switchTrack(1));
-        nextTabBtn.addEventListener('click', () => {
-            const darkModeEnabled = document.body.classList.toggle('dark-mode');
-            nextTabBtn.textContent = darkModeEnabled ? 'Mode Terang' : 'Mode Gelap';
-            nextTabBtn.setAttribute('aria-pressed', String(darkModeEnabled));
-        });
         lagu.addEventListener('loadedmetadata', updateProgress);
         lagu.addEventListener('timeupdate', updateProgress);
         lagu.addEventListener('play', () => {
@@ -1738,6 +1719,7 @@
 
             const playlistProgress = getProgress(playlist);
             const aboutProgress = getProgress(aboutSection);
+            const commentsProgress = getProgress(commentsSection);
             const setMotion = (element, progress, startY, startScale) => {
                 element.classList.toggle('is-visible', progress > 0);
                 element.style.setProperty('--scroll-opacity', progress.toFixed(3));
@@ -1747,6 +1729,7 @@
 
             setMotion(playlist, playlistProgress, 60, 0.96);
             setMotion(aboutSection, aboutProgress, 70, 0.96);
+            setMotion(commentsSection, commentsProgress, 60, 0.96);
 
             const photoProgress = Math.min(Math.max((aboutProgress - 0.05) / 0.75, 0), 1);
             const boxProgress = Math.min(Math.max((aboutProgress - 0.2) / 0.7, 0), 1);
