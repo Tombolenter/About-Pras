@@ -718,9 +718,203 @@
             line-height: 1.8;
         }
 
+        .comments-section {
+            width: min(90vw, 720px);
+            margin: 28px 0 80px;
+            padding: 24px;
+            box-sizing: border-box;
+            text-align: left;
+            background: var(--glass-gray);
+            border: 1px solid rgba(255,255,255,0.28);
+            border-radius: 18px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .comments-heading {
+            margin: 0 0 6px;
+            color: white;
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+        }
+
+        .comments-intro {
+            margin: 0 0 20px;
+            color: #dfeaff;
+            font-size: 0.9rem;
+        }
+
+        .comment-form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .comment-form label {
+            display: grid;
+            gap: 6px;
+            color: #dfeaff;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 11px 13px;
+            box-sizing: border-box;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 10px;
+            background: rgba(0,0,0,0.2);
+            color: white;
+            font: inherit;
+            resize: vertical;
+        }
+
+        .comment-form input:focus-visible,
+        .comment-form textarea:focus-visible {
+            border-color: #00e5ff;
+            outline: 2px solid rgba(0,229,255,0.35);
+            outline-offset: 2px;
+        }
+
+        .comment-submit,
+        .ticker-toggle {
+            justify-self: start;
+            padding: 10px 16px;
+            border: 1px solid rgba(0,229,255,0.45);
+            border-radius: 999px;
+            background: rgba(0,229,255,0.12);
+            color: white;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .comment-submit:hover,
+        .ticker-toggle:hover {
+            background: rgba(0,229,255,0.24);
+            transform: translateY(-1px);
+        }
+
+        .comment-submit:disabled {
+            cursor: wait;
+            opacity: 0.65;
+        }
+
+        .comment-status {
+            min-height: 1.3em;
+            margin: 0;
+            color: #b9d3ff;
+            font-size: 0.85rem;
+        }
+
+        .comment-ticker-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 24px 0 10px;
+        }
+
+        .comment-ticker-heading h3 {
+            margin: 0;
+            color: #b9d3ff;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .ticker-toggle {
+            padding: 6px 11px;
+            font-size: 0.75rem;
+        }
+
+        .comment-ticker {
+            overflow: hidden;
+            padding: 8px 0 12px;
+            mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+        }
+
+        .comment-track {
+            display: flex;
+            width: max-content;
+            animation: commentTicker var(--ticker-duration, 36s) linear infinite;
+            will-change: transform;
+        }
+
+        .comment-ticker:hover .comment-track,
+        .comment-ticker:focus-within .comment-track,
+        .comment-track.is-paused {
+            animation-play-state: paused;
+        }
+
+        .comment-group {
+            display: flex;
+            flex: 0 0 auto;
+            gap: 14px;
+            padding-right: 14px;
+        }
+
+        .comment-chip {
+            width: min(72vw, 300px);
+            padding: 12px 15px;
+            box-sizing: border-box;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.16);
+        }
+
+        .comment-author {
+            display: block;
+            overflow: hidden;
+            margin-bottom: 5px;
+            color: #00e5ff;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .comment-message {
+            display: -webkit-box;
+            overflow: hidden;
+            margin: 0;
+            color: #f3f6ff;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+
+        .ticker-empty {
+            margin: 0;
+            color: #bfc7d5;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        @keyframes commentTicker {
+            from { transform: translate3d(-50%, 0, 0); }
+            to { transform: translate3d(0, 0, 0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .comment-track {
+                animation: none;
+                transform: none;
+            }
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 28px 12px;
+            }
+
+            .comments-section {
+                padding: 20px 16px;
             }
 
             .btn {
@@ -872,7 +1066,7 @@
     </audio>
 
     <h1 class="username">GUNGPRSTYOO</h1>
-    <div class="bio">PDD /  XI TJKT 1 / Introvert </div>
+    <div class="bio">PDD /  XI TJKT 1 / Introvert</div>
 
     <div class="music-player" id="player-container">
         <div class="music-card">
@@ -939,6 +1133,29 @@
         </div>
     </section>
 
+    <section class="comments-section" aria-labelledby="comments-heading">
+        <h2 class="comments-heading" id="comments-heading">Tinggalkan Komentar</h2>
+        <p class="comments-intro">Tulis pesan singkat buat Pras. Komentar dari semua orang bakal berjalan di sini.</p>
+        <form class="comment-form" id="comment-form">
+            <label for="comment-name">Nama
+                <input id="comment-name" name="name" type="text" maxlength="40" autocomplete="name" required placeholder="Nama kamu">
+            </label>
+            <label for="comment-message">Komentar
+                <textarea id="comment-message" name="message" maxlength="280" rows="3" required placeholder="Tulis komentarmu (maksimal 280 karakter)"></textarea>
+            </label>
+            <button class="comment-submit" id="comment-submit" type="submit">Kirim komentar</button>
+            <p class="comment-status" id="comment-status" role="status" aria-live="polite"></p>
+        </form>
+        <div class="comment-ticker-heading">
+            <h3>Komentar teman-teman</h3>
+            <button class="ticker-toggle" id="ticker-toggle" type="button" aria-pressed="false">Jeda komentar</button>
+        </div>
+        <div class="comment-ticker" id="comment-ticker" aria-label="Komentar terbaru berjalan dari kiri ke kanan">
+            <p class="ticker-empty" id="ticker-empty">Memuat komentar...</p>
+            <div class="comment-track" id="comment-track" aria-live="off"></div>
+        </div>
+    </section>
+
     <div class="hacker-overlay" id="hacker-overlay" aria-hidden="true">
         <div class="hacker-rain" id="hacker-rain" aria-hidden="true"></div>
         <div class="hacker-card" role="dialog" aria-modal="true" aria-label="Identitas profil">
@@ -953,8 +1170,171 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         history.scrollRestoration = 'manual';
+
+        const supabaseClient = window.supabase
+            ? window.supabase.createClient(
+                'https://bgusituxpmcmenwtmbwa.supabase.co',
+                'sb_publishable_ZaszBvU-kSD78kGxPRDGig_Ceo7WwLL'
+            )
+            : null;
+        const commentsTable = 'comments';
+        const commentForm = document.getElementById('comment-form');
+        const commentNameInput = document.getElementById('comment-name');
+        const commentMessageInput = document.getElementById('comment-message');
+        const commentSubmit = document.getElementById('comment-submit');
+        const commentStatus = document.getElementById('comment-status');
+        const commentTrack = document.getElementById('comment-track');
+        const tickerEmpty = document.getElementById('ticker-empty');
+        const tickerToggle = document.getElementById('ticker-toggle');
+        const comments = [];
+        let commentsStarted = false;
+
+        function renderComments() {
+            commentTrack.replaceChildren();
+            tickerEmpty.hidden = comments.length > 0;
+            if (comments.length === 0) {
+                tickerEmpty.textContent = 'Belum ada komentar. Jadilah yang pertama!';
+                return;
+            }
+
+            const createCommentGroup = (isDuplicate) => {
+                const group = document.createElement('div');
+                group.className = 'comment-group';
+                group.setAttribute('role', 'list');
+                if (isDuplicate) group.setAttribute('aria-hidden', 'true');
+
+                comments.forEach((comment) => {
+                    const card = document.createElement('article');
+                    card.className = 'comment-chip';
+                    card.setAttribute('role', 'listitem');
+                    const author = document.createElement('span');
+                    author.className = 'comment-author';
+                    author.textContent = comment.name;
+                    const message = document.createElement('p');
+                    message.className = 'comment-message';
+                    message.textContent = comment.message;
+                    card.append(author, message);
+                    group.append(card);
+                });
+
+                return group;
+            };
+
+            const firstGroup = createCommentGroup(false);
+            commentTrack.append(firstGroup, createCommentGroup(true));
+            const duration = Math.max(18, firstGroup.scrollWidth / 28);
+            commentTrack.style.setProperty('--ticker-duration', `${duration}s`);
+        }
+
+        function addCommentToTicker(comment) {
+            if (!comment || typeof comment.name !== 'string' || typeof comment.message !== 'string') return;
+            const isDuplicate = comments.some((existing) =>
+                existing.name === comment.name &&
+                existing.message === comment.message &&
+                existing.created_at === comment.created_at
+            );
+            if (isDuplicate) return;
+
+            comments.push({
+                name: comment.name,
+                message: comment.message,
+                created_at: comment.created_at || ''
+            });
+            if (comments.length > 20) comments.shift();
+            renderComments();
+        }
+
+        async function startComments() {
+            if (commentsStarted) return;
+            commentsStarted = true;
+
+            if (!supabaseClient) {
+                const error = new Error('Supabase SDK gagal dimuat dari CDN.');
+                tickerEmpty.textContent = 'Komentar belum bisa dimuat. Coba muat ulang halaman.';
+                commentStatus.textContent = error.message;
+                console.error(error);
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from(commentsTable)
+                .select('name,message,created_at')
+                .order('created_at', { ascending: false })
+                .limit(20);
+
+            if (error) {
+                tickerEmpty.textContent = 'Komentar belum bisa dimuat. Coba muat ulang halaman.';
+                commentStatus.textContent = `Gagal memuat komentar: ${error.message}`;
+                console.error('Gagal memuat komentar Supabase:', error);
+            } else {
+                data.reverse().forEach(addCommentToTicker);
+                if (data.length === 0) renderComments();
+            }
+
+            supabaseClient
+                .channel('public-comments')
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: commentsTable
+                }, (payload) => addCommentToTicker(payload.new))
+                .subscribe((status, subscriptionError) => {
+                    if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+                        console.error('Realtime komentar Supabase gagal:', subscriptionError || status);
+                    }
+                });
+        }
+
+        commentForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            commentStatus.textContent = '';
+            if (!supabaseClient) {
+                commentStatus.textContent = 'Komentar belum bisa dikirim karena koneksi Supabase tidak tersedia.';
+                return;
+            }
+
+            commentSubmit.disabled = true;
+            commentSubmit.textContent = 'Mengirim...';
+
+            const comment = {
+                name: commentNameInput.value.trim(),
+                message: commentMessageInput.value.trim()
+            };
+
+            if (!comment.name || !comment.message) {
+                commentStatus.textContent = 'Nama dan komentar wajib diisi.';
+                commentSubmit.disabled = false;
+                commentSubmit.textContent = 'Kirim komentar';
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from(commentsTable)
+                .insert(comment)
+                .select('name,message,created_at')
+                .single();
+
+            if (error) {
+                commentStatus.textContent = `Komentar gagal dikirim: ${error.message}`;
+                console.error('Gagal mengirim komentar Supabase:', error);
+            } else {
+                addCommentToTicker(data);
+                commentForm.reset();
+                commentStatus.textContent = 'Komentar berhasil dikirim. Makasih!';
+            }
+
+            commentSubmit.disabled = false;
+            commentSubmit.textContent = 'Kirim komentar';
+        });
+
+        tickerToggle.addEventListener('click', () => {
+            const isPaused = commentTrack.classList.toggle('is-paused');
+            tickerToggle.setAttribute('aria-pressed', String(isPaused));
+            tickerToggle.textContent = isPaused ? 'Lanjutkan komentar' : 'Jeda komentar';
+        });
 
         function resetScrollPosition() {
             window.scrollTo(0, 0);
@@ -1121,7 +1501,8 @@
 
         function mulaiWebsite() {
             document.getElementById('masuk-layar').style.display = 'none';
-            document.body.classList.add('site-started');
+             document.body.classList.add('site-started');
+            startComments();
             if (lagu.paused) {
                 lagu.play();
             }
