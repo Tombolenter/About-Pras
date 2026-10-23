@@ -718,6 +718,31 @@
             line-height: 1.8;
         }
 
+        .visit-counter {
+            position: fixed;
+            left: 22px;
+            bottom: 22px;
+            z-index: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            padding: 8px 14px;
+            border: 1px solid rgba(255,255,255,0.24);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.1);
+            color: #dfeaff;
+            font-size: 0.82rem;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.16);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .visit-counter strong {
+            color: #00e5ff;
+            font-variant-numeric: tabular-nums;
+        }
+
         .comments-section {
             width: min(90vw, 720px);
             margin: 28px 0 80px;
@@ -777,8 +802,7 @@
             outline-offset: 2px;
         }
 
-        .comment-submit,
-        .ticker-toggle {
+        .comment-submit {
             justify-self: start;
             padding: 10px 16px;
             border: 1px solid rgba(0,229,255,0.45);
@@ -791,8 +815,7 @@
             transition: background 0.2s ease, transform 0.2s ease;
         }
 
-        .comment-submit:hover,
-        .ticker-toggle:hover {
+        .comment-submit:hover {
             background: rgba(0,229,255,0.24);
             transform: translateY(-1px);
         }
@@ -809,103 +832,88 @@
             font-size: 0.85rem;
         }
 
-        .comment-ticker-heading {
+        .comment-list-heading {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 12px;
             margin: 24px 0 10px;
         }
 
-        .comment-ticker-heading h3 {
+        .comment-list-heading h3 {
             margin: 0;
-            color: #b9d3ff;
-            font-size: 0.78rem;
-            letter-spacing: 0.1em;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .comment-count {
+            color: #bfc7d5;
+            font-size: 0.85rem;
+        }
+
+        .comment-list {
+            display: grid;
+            gap: 18px;
+            margin-top: 14px;
+        }
+
+        .comment-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .comment-avatar {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00bcd4, #7248ce);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 800;
             text-transform: uppercase;
         }
 
-        .ticker-toggle {
-            padding: 6px 11px;
-            font-size: 0.75rem;
+        .comment-content {
+            min-width: 0;
+            flex: 1;
+            padding: 2px 0;
         }
 
-        .comment-ticker {
-            overflow: hidden;
-            padding: 8px 0 12px;
-            mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
-        }
-
-        .comment-track {
+        .comment-meta {
             display: flex;
-            width: max-content;
-            animation: commentTicker var(--ticker-duration, 36s) linear infinite;
-            will-change: transform;
-        }
-
-        .comment-ticker:hover .comment-track,
-        .comment-ticker:focus-within .comment-track,
-        .comment-track.is-paused {
-            animation-play-state: paused;
-        }
-
-        .comment-group {
-            display: flex;
-            flex: 0 0 auto;
-            gap: 14px;
-            padding-right: 14px;
-        }
-
-        .comment-chip {
-            width: min(72vw, 300px);
-            padding: 12px 15px;
-            box-sizing: border-box;
-            border: 1px solid rgba(255,255,255,0.16);
-            border-radius: 14px;
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.16);
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 7px;
+            margin-bottom: 5px;
         }
 
         .comment-author {
-            display: block;
-            overflow: hidden;
-            margin-bottom: 5px;
             color: #00e5ff;
             font-size: 0.8rem;
             font-weight: 800;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            overflow-wrap: anywhere;
+        }
+
+        .comment-date {
+            color: #bfc7d5;
+            font-size: 0.72rem;
         }
 
         .comment-message {
-            display: -webkit-box;
-            overflow: hidden;
             margin: 0;
             color: #f3f6ff;
             font-size: 0.88rem;
             line-height: 1.5;
             overflow-wrap: anywhere;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3;
         }
 
-        .ticker-empty {
+        .comment-empty {
             margin: 0;
             color: #bfc7d5;
             font-size: 0.85rem;
-            text-align: center;
-        }
-
-        @keyframes commentTicker {
-            from { transform: translate3d(-50%, 0, 0); }
-            to { transform: translate3d(0, 0, 0); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .comment-track {
-                animation: none;
-                transform: none;
-            }
         }
 
         @media (max-width: 600px) {
@@ -1029,6 +1037,13 @@
                 padding: 8px 13px;
                 font-size: 0.78rem;
             }
+
+            .visit-counter {
+                left: 14px;
+                bottom: 14px;
+                padding: 7px 11px;
+                font-size: 0.74rem;
+            }
         }
 
         #masuk-layar { 
@@ -1114,6 +1129,12 @@
         </a>
     </div>
 
+    <p class="visit-counter" aria-label="Jumlah visit" aria-live="polite">
+        <span aria-hidden="true">👀</span>
+        <span>Visit</span>
+        <strong id="visit-count">Memuat...</strong>
+    </p>
+
     <button class="next-tab-btn" id="next-tab-btn" type="button" aria-pressed="false">Mode Gelap</button>
 
     <section class="playlist" aria-labelledby="playlist-heading">
@@ -1135,7 +1156,7 @@
 
     <section class="comments-section" aria-labelledby="comments-heading">
         <h2 class="comments-heading" id="comments-heading">Tinggalkan Komentar</h2>
-        <p class="comments-intro">Tulis pesan singkat buat Pras. Komentar dari semua orang bakal berjalan di sini.</p>
+        <p class="comments-intro">Tulis pesan buat Pras dan lihat komentar teman-teman di bawah.</p>
         <form class="comment-form" id="comment-form">
             <label for="comment-name">Nama
                 <input id="comment-name" name="name" type="text" maxlength="40" autocomplete="name" required placeholder="Nama kamu">
@@ -1146,13 +1167,12 @@
             <button class="comment-submit" id="comment-submit" type="submit">Kirim komentar</button>
             <p class="comment-status" id="comment-status" role="status" aria-live="polite"></p>
         </form>
-        <div class="comment-ticker-heading">
-            <h3>Komentar teman-teman</h3>
-            <button class="ticker-toggle" id="ticker-toggle" type="button" aria-pressed="false">Jeda komentar</button>
+        <div class="comment-list-heading">
+            <h3>Komentar</h3>
+            <span class="comment-count" id="comment-count">0</span>
         </div>
-        <div class="comment-ticker" id="comment-ticker" aria-label="Komentar terbaru berjalan dari kiri ke kanan">
-            <p class="ticker-empty" id="ticker-empty">Memuat komentar...</p>
-            <div class="comment-track" id="comment-track" aria-live="off"></div>
+        <div class="comment-list" id="comment-list" role="list" aria-live="polite">
+            <p class="comment-empty" id="comment-empty">Memuat komentar...</p>
         </div>
     </section>
 
@@ -1180,53 +1200,138 @@
                 'sb_publishable_ZaszBvU-kSD78kGxPRDGig_Ceo7WwLL'
             )
             : null;
+        const visitCountElement = document.getElementById('visit-count');
+        const visitorIdStorageKey = 'pras-site-visitor-id';
         const commentsTable = 'comments';
         const commentForm = document.getElementById('comment-form');
         const commentNameInput = document.getElementById('comment-name');
         const commentMessageInput = document.getElementById('comment-message');
         const commentSubmit = document.getElementById('comment-submit');
         const commentStatus = document.getElementById('comment-status');
-        const commentTrack = document.getElementById('comment-track');
-        const tickerEmpty = document.getElementById('ticker-empty');
-        const tickerToggle = document.getElementById('ticker-toggle');
+        const commentList = document.getElementById('comment-list');
+        const commentCount = document.getElementById('comment-count');
+        const commentEmpty = document.getElementById('comment-empty');
         const comments = [];
         let commentsStarted = false;
+        let visitCountStarted = false;
 
-        function renderComments() {
-            commentTrack.replaceChildren();
-            tickerEmpty.hidden = comments.length > 0;
-            if (comments.length === 0) {
-                tickerEmpty.textContent = 'Belum ada komentar. Jadilah yang pertama!';
+        function createVisitorId() {
+            const bytes = new Uint8Array(16);
+            if (window.crypto && window.crypto.getRandomValues) {
+                window.crypto.getRandomValues(bytes);
+            } else {
+                bytes.forEach((_, index) => {
+                    bytes[index] = Math.floor(Math.random() * 256);
+                });
+            }
+
+            bytes[6] = (bytes[6] & 0x0f) | 0x40;
+            bytes[8] = (bytes[8] & 0x3f) | 0x80;
+            const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+            return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+        }
+
+        async function startVisitCounter() {
+            if (visitCountStarted) return;
+            visitCountStarted = true;
+
+            if (!supabaseClient) {
+                visitCountElement.textContent = 'Tidak tersedia';
+                console.error('Jumlah pengunjung tidak bisa dimuat karena Supabase SDK tidak tersedia.');
                 return;
             }
 
-            const createCommentGroup = (isDuplicate) => {
-                const group = document.createElement('div');
-                group.className = 'comment-group';
-                group.setAttribute('role', 'list');
-                if (isDuplicate) group.setAttribute('aria-hidden', 'true');
+            let visitorId;
+            try {
+                visitorId = localStorage.getItem(visitorIdStorageKey);
+                if (!visitorId || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(visitorId)) {
+                    visitorId = createVisitorId();
+                    localStorage.setItem(visitorIdStorageKey, visitorId);
+                }
+            } catch (error) {
+                visitCountElement.textContent = 'Penyimpanan diblokir';
+                console.error('ID pengunjung tidak bisa disimpan di browser:', error);
+                return;
+            }
 
-                comments.forEach((comment) => {
-                    const card = document.createElement('article');
-                    card.className = 'comment-chip';
-                    card.setAttribute('role', 'listitem');
-                    const author = document.createElement('span');
-                    author.className = 'comment-author';
-                    author.textContent = comment.name;
-                    const message = document.createElement('p');
-                    message.className = 'comment-message';
-                    message.textContent = comment.message;
-                    card.append(author, message);
-                    group.append(card);
+            try {
+                const { data, error } = await supabaseClient.rpc('register_site_visit', {
+                    p_visitor_id: visitorId
                 });
 
-                return group;
-            };
+                if (error) {
+                    visitCountElement.textContent = 'Tidak tersedia';
+                    console.error('Gagal memuat jumlah pengunjung Supabase:', error);
+                    return;
+                }
 
-            const firstGroup = createCommentGroup(false);
-            commentTrack.append(firstGroup, createCommentGroup(true));
-            const duration = Math.max(18, firstGroup.scrollWidth / 28);
-            commentTrack.style.setProperty('--ticker-duration', `${duration}s`);
+                const totalVisitors = Number(data);
+                if (!Number.isSafeInteger(totalVisitors) || totalVisitors < 0) {
+                    visitCountElement.textContent = 'Tidak tersedia';
+                    console.error('Supabase mengembalikan jumlah pengunjung yang tidak valid:', data);
+                    return;
+                }
+
+                visitCountElement.textContent = String(totalVisitors);
+            } catch (error) {
+                visitCountElement.textContent = 'Tidak tersedia';
+                console.error('Permintaan jumlah pengunjung gagal:', error);
+            }
+        }
+
+        function formatCommentDate(value) {
+            if (!value) return '';
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            return new Intl.DateTimeFormat('id-ID', {
+                dateStyle: 'medium',
+                timeStyle: 'short'
+            }).format(date);
+        }
+
+        function renderComments() {
+            commentList.replaceChildren();
+            commentCount.textContent = String(comments.length);
+            commentEmpty.hidden = comments.length > 0;
+            if (comments.length === 0) {
+                commentList.append(commentEmpty);
+                return;
+            }
+
+            comments.forEach((comment) => {
+                const item = document.createElement('article');
+                item.className = 'comment-item';
+                item.setAttribute('role', 'listitem');
+                const avatar = document.createElement('span');
+                avatar.className = 'comment-avatar';
+                avatar.setAttribute('aria-hidden', 'true');
+                avatar.textContent = comment.name.trim().charAt(0) || '?';
+
+                const content = document.createElement('div');
+                content.className = 'comment-content';
+                const meta = document.createElement('div');
+                meta.className = 'comment-meta';
+                const author = document.createElement('span');
+                author.className = 'comment-author';
+                author.textContent = comment.name;
+                meta.append(author);
+
+                const dateText = formatCommentDate(comment.created_at);
+                if (dateText) {
+                    const date = document.createElement('time');
+                    date.className = 'comment-date';
+                    date.dateTime = comment.created_at;
+                    date.textContent = dateText;
+                    meta.append(date);
+                }
+
+                const message = document.createElement('p');
+                message.className = 'comment-message';
+                message.textContent = comment.message;
+                content.append(meta, message);
+                item.append(avatar, content);
+                commentList.append(item);
+            });
         }
 
         function addCommentToTicker(comment) {
@@ -1238,12 +1343,12 @@
             );
             if (isDuplicate) return;
 
-            comments.push({
+            comments.unshift({
                 name: comment.name,
                 message: comment.message,
                 created_at: comment.created_at || ''
             });
-            if (comments.length > 20) comments.shift();
+            if (comments.length > 20) comments.pop();
             renderComments();
         }
 
@@ -1253,7 +1358,7 @@
 
             if (!supabaseClient) {
                 const error = new Error('Supabase SDK gagal dimuat dari CDN.');
-                tickerEmpty.textContent = 'Komentar belum bisa dimuat. Coba muat ulang halaman.';
+                commentEmpty.textContent = 'Komentar belum bisa dimuat. Coba muat ulang halaman.';
                 commentStatus.textContent = error.message;
                 console.error(error);
                 return;
@@ -1266,12 +1371,15 @@
                 .limit(20);
 
             if (error) {
-                tickerEmpty.textContent = 'Komentar belum bisa dimuat. Coba muat ulang halaman.';
+                commentEmpty.textContent = 'Komentar belum bisa dimuat. Coba muat ulang halaman.';
                 commentStatus.textContent = `Gagal memuat komentar: ${error.message}`;
                 console.error('Gagal memuat komentar Supabase:', error);
             } else {
-                data.reverse().forEach(addCommentToTicker);
-                if (data.length === 0) renderComments();
+                [...data].reverse().forEach(addCommentToTicker);
+                if (data.length === 0) {
+                    commentEmpty.textContent = 'Belum ada komentar. Jadilah yang pertama!';
+                    renderComments();
+                }
             }
 
             supabaseClient
@@ -1328,12 +1436,6 @@
 
             commentSubmit.disabled = false;
             commentSubmit.textContent = 'Kirim komentar';
-        });
-
-        tickerToggle.addEventListener('click', () => {
-            const isPaused = commentTrack.classList.toggle('is-paused');
-            tickerToggle.setAttribute('aria-pressed', String(isPaused));
-            tickerToggle.textContent = isPaused ? 'Lanjutkan komentar' : 'Jeda komentar';
         });
 
         function resetScrollPosition() {
@@ -1503,6 +1605,7 @@
             document.getElementById('masuk-layar').style.display = 'none';
              document.body.classList.add('site-started');
             startComments();
+            startVisitCounter();
             if (lagu.paused) {
                 lagu.play();
             }
